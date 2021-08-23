@@ -89,8 +89,8 @@ SERIAL_NUMBER_DIGIT_CNT	equ	4
 ; If your organization has its own vendor ID/product ID, substitute it here.
 ; The Openmoko vendor/product ID cannot be used in closed-source/non-open-hardware
 ; projects: see http://wiki.openmoko.org/wiki/USB_Product_IDs
-USB_VENDOR_ID		equ	0x1D50
-USB_PRODUCT_ID		equ	0xEEEE	; to be filled in once I obtain a product ID
+USB_VENDOR_ID		equ	0x25BE  ; zSpace, Inc
+USB_PRODUCT_ID		equ	0x8020	; Casper bootloader
 
 DEVICE_DESC_LEN		equ	18	; device descriptor length
 CONFIG_DESC_TOTAL_LEN	equ	67	; total length of configuration descriptor and sub-descriptors
