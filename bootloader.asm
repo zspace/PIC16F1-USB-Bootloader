@@ -74,8 +74,8 @@ WRT_CONFIG		equ	_WRT_HALF
 WRT_CONFIG		equ	_WRT_BOOT
 	endif
 
-	__config _CONFIG1, _FOSC_INTOSC & _WDTE_SWDTEN & _PWRTE_ON & _MCLRE_OFF & _CP_OFF & _BOREN_ON & _IESO_OFF & _FCMEN_OFF
-	__config _CONFIG2, WRT_CONFIG & _CPUDIV_NOCLKDIV & _USBLSCLK_48MHz & _PLLMULT_3x & _PLLEN_ENABLED & _STVREN_ON & _BORV_LO & _LVP_OFF
+	__config _CONFIG1, _FOSC_INTOSC & _WDTE_SWDTEN & _PWRTE_ON & _MCLRE_ON & _CP_OFF & _BOREN_ON & _CLKOUTEN_OFF & _IESO_OFF & _FCMEN_OFF
+	__config _CONFIG2, WRT_CONFIG & _CPUDIV_NOCLKDIV & _USBLSCLK_48MHz & _PLLMULT_3x & _PLLEN_ENABLED & _STVREN_ON & _BORV_LO & _DEBUG_OFF & _LVP_ON
 
 
 
@@ -667,10 +667,12 @@ _wosc	movlw	(1<<PLLRDY)|(1<<HFIOFR)|(1<<HFIOFS)
 	call	app_is_present
 	bz	_bootloader_main	; if we have no application, enter bootloader mode
 
-; We have a valid application? Check if the entry pin is grounded
-	banksel	PORTA
-	btfss	PORTA,RA3
-	goto	_bootloader_main	; enter bootloader mode if input is low
+; REVIEW: if we need a de-brick pin, consider RC3 instead of RA3.
+; Disable RA3 for now since it conflicts with MCLR/ICSP programming...
+;; We have a valid application? Check if the entry pin is grounded
+;	banksel	PORTA
+;	btfss	PORTA,RA3
+;	goto	_bootloader_main	; enter bootloader mode if input is low
 
 ; We have a valid application and the entry pin is high. Start the application.
 	banksel	OPTION_REG
